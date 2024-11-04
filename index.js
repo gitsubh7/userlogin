@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import db from './models/db.js'; 
 import bcrypt from 'bcrypt'
 import User from './models/user.js'
+import cookieParser from 'cookie-parser';
+import jwt from 'jsonwebtoken';
+import createToken from './jwt.js';
 
 dotenv.config({
     path:'./.env'
@@ -11,6 +14,7 @@ dotenv.config({
 
 const app=express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/register", async (req, res) => {
     try {
@@ -54,6 +58,10 @@ app.post("/register", async (req, res) => {
                 error: "Incorrect username or password"
             });
         }else{
+            const accessToken=createToken(user);
+            res.cookie("access-token",accessToken,{
+                maxAge:60*60*24*30*1000
+            })
             res.json("Logged in");
         }
         
