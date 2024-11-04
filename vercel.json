@@ -1,9 +1,20 @@
 {
   "version": 2,
   "builds": [
-    { "src": "app.js", "use": "@vercel/node" }
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "index.js" }
-  ]
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
+  ],
+  "env": {
+    "PORT": "5000",
+    "JWT_SECRET": "wowowowowow",
+    "DB_URI": "mongodb+srv://ok:chaiaurcode@cluster0glogin.lhgbi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0glogin"
+  }
 }
