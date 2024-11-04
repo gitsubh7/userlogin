@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/register",
+        "dest": "/register"
+      },
+      {
+        "src": "/login",
+        "dest": "/login"
+      },
+      {
+        "src": "/profile",
+        "dest": "/profile"
+      }
+    ],
+    "env": {
+      "SECRET_KEY": "wowowowowow",
+      "MONGODB_URI": "mongodb+srv://ok:chaiaurcode@cluster0glogin.lhgbi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0glogin",
+      "PORT": "5000"
+    }
+  }
+  
