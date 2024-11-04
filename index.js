@@ -5,7 +5,8 @@ import bcrypt from 'bcrypt'
 import User from './models/user.js'
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
-import createToken from './jwt.js';
+import {createToken} from './jwt.js';
+import { validateToken } from './jwt.js';
 
 dotenv.config({
     path:'./.env'
@@ -72,6 +73,10 @@ app.post("/register", async (req, res) => {
             error: "An error occurred during login"
         });
     }
+});
+
+app.get('/profile',validateToken,(req,res)=>{
+    res.json("blah blah blah"); 
 });
 
 db()
