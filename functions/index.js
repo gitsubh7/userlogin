@@ -1,12 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import db from './models/db.js'; 
+import db from '../models/db.js'; 
 import bcrypt from 'bcrypt'
-import User from './models/user.js'
+import User from '../models/user.js'
 import cookieParser from 'cookie-parser';
 import jwt from 'jsonwebtoken';
-import {createToken} from './jwt.js';
-import { validateToken } from './jwt.js';
+import {createToken} from '../jwt.js';
+import { validateToken } from '../jwt.js';
 
 dotenv.config({
     path:'./.env'
@@ -14,10 +14,11 @@ dotenv.config({
 
 
 const app=express();
+const router=express.Router();
 app.use(express.json());
 app.use(cookieParser());
 
-app.post("/register", async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
       const { username, password } = req.body;
       const existingUser = await User.findOne({ username });
@@ -41,7 +42,7 @@ app.post("/register", async (req, res) => {
 
 
 
-  app.post('/login', async (req, res) => {
+  router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     
     try {
@@ -75,7 +76,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
-app.get('/profile',validateToken,(req,res)=>{
+router.get('/profile',validateToken,(req,res)=>{
     res.json("blah blah blah"); 
 });
 
@@ -89,7 +90,9 @@ db()
         console.log("Mongo DB connection failed!!!",err);
     });
 
-export {app};
+app.use('/.netlify/functions/index',router);
+
+module.exports.handler=serverless(app);
 
 
 
